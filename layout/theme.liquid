@@ -17,6 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ 'interactive.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%} Merchant-adjustable tokens (defaults = Brand Identity Bible) {%- endcomment -%}
   <style>
@@ -30,6 +31,7 @@
   </style>
 
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script src="{{ 'interactive.js' | asset_url }}" defer></script>
   <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
   {{ content_for_header }}
