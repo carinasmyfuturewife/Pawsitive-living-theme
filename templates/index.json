@@ -3,6 +3,7 @@
     "hero",
     "positioning_statement",
     "featured_collection",
+    "quiz",
     "feature_balm",
     "feature_coat",
     "feature_bundle",
@@ -10,6 +11,7 @@
     "ingredient_standards",
     "lifestyle_gallery",
     "brand_story",
+    "reviews",
     "give_back",
     "newsletter"
   ],
@@ -21,7 +23,8 @@
         "heading": "Care is a daily practice.",
         "link": "/pages/our-story",
         "link_label": "Our story",
-        "text": "<p>PAWSITIVE.LIVING began with a simple observation: the dogs we love most are cared for in small moments, every single day. We make a considered few essentials for those moments \u2014 formulated thoughtfully, designed quietly, and made to earn their place in your routine.</p>"
+        "text": "<p>PAWSITIVE.LIVING began with a simple observation: the dogs we love most are cared for in small moments, every single day. We make a considered few essentials for those moments \u2014 formulated thoughtfully, designed quietly, and made to earn their place in your routine.</p>",
+        "image": "shopify://shop_images/34671549710407"
       },
       "type": "brand-story"
     },
@@ -29,7 +32,9 @@
       "settings": {
         "eyebrow": "The ritual",
         "heading": "For paws and noses",
-        "text": "<p>A considered balm for the parts of your dog that meet the world. Fragrance-free, made for daily use, through every season.</p>"
+        "text": "<p>A considered balm for the parts of your dog that meet the world. Fragrance-free, made for daily use, through every season.</p>",
+        "product": "paw-ritual",
+        "image": "shopify://shop_images/34671549743175"
       },
       "type": "product-feature"
     },
@@ -37,7 +42,9 @@
       "settings": {
         "eyebrow": "The set",
         "heading": "The complete ritual",
-        "text": "<p>Both essentials in one considered set. Balm first, then mist \u2014 the order is part of the ritual.</p>"
+        "text": "<p>Both essentials in one considered set. Balm first, then mist \u2014 the order is part of the ritual.</p>",
+        "product": "the-ritual-bundle",
+        "image": "shopify://shop_images/34671550234695"
       },
       "type": "product-feature"
     },
@@ -47,7 +54,9 @@
         "eyebrow": "The ritual",
         "heading": "For the coat",
         "reverse": true,
-        "text": "<p>A lightweight, fragrance-free finishing mist for a naturally polished coat. The refined final step.</p>"
+        "text": "<p>A lightweight, fragrance-free finishing mist for a naturally polished coat. The refined final step.</p>",
+        "product": "coat-finish",
+        "image": "shopify://shop_images/34671549841479"
       },
       "type": "product-feature"
     },
@@ -57,15 +66,16 @@
         "heading": "Everyday rituals, considered.",
         "limit": 3,
         "quick_add": true,
-        "subheading": "A small, deliberate line. Nothing more than your dog needs, nothing less than they deserve."
+        "subheading": "A small, deliberate line. Nothing more than your dog needs, nothing less than they deserve.",
+        "collection": "shop-all"
       },
       "type": "featured-collection"
     },
     "give_back": {
       "settings": {
         "eyebrow": "Our impact",
-        "heading": "From every order, to animal welfare.",
-        "statement": "$2 from every order goes to animal welfare. Measurable, verifiable, and part of every purchase \u2014 not an afterthought.",
+        "heading": "For the pets still waiting for home.",
+        "statement": "$2 from every order goes to organizations caring for homeless pets. Our founder spent two years without stable housing, and saw how much a dog can mean when you have little else. This company grew from that \u2014 every order carries it forward.",
         "donation_amount": "$2",
         "show_amount": true,
         "link": "/pages/our-impact",
@@ -81,7 +91,8 @@
         "cta_secondary_link": "/pages/our-story",
         "eyebrow": "Ultra-premium pet care",
         "heading": "EVERYDAY CARE, ELEVATED.",
-        "text": "Thoughtfully developed essentials for the rituals that matter most."
+        "text": "Thoughtfully developed essentials for the rituals that matter most.",
+        "image": "shopify://shop_images/34671549546567"
       },
       "type": "hero"
     },
@@ -140,6 +151,18 @@
     },
     "lifestyle_gallery": {
       "type": "lifestyle-gallery",
+      "settings": {}
+    },
+    "quiz": {
+      "type": "quiz",
+      "settings": {
+        "product_paw": "paw-ritual",
+        "product_coat": "coat-finish",
+        "product_bundle": "the-ritual-bundle"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
       "settings": {}
     }
   }

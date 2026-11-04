@@ -1,0 +1,214 @@
+{% comment %}
+  Ritual Finder Quiz — "What's your dog's ritual?"
+  Three questions, recommends a product, captures email.
+  Products are configurable; defaults point at the live catalog.
+{% endcomment %}
+<section class="quiz" aria-label="{{ section.settings.heading | escape }}" data-quiz>
+  <div class="quiz__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h2 class="quiz__heading">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}
+      <div class="quiz__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    <div class="quiz__steps" data-quiz-steps>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'question' -%}
+          <fieldset class="quiz__step" data-quiz-step="{{ forloop.index0 }}" {{ block.shopify_attributes }} hidden>
+            <legend class="quiz__question">{{ block.settings.question }}</legend>
+            <div class="quiz__options">
+              {%- for i in (1..4) -%}
+                {%- assign opt_key = 'option_' | append: i -%}
+                {%- assign val_key = 'value_' | append: i -%}
+                {%- assign opt = block.settings[opt_key] -%}
+                {%- if opt != blank -%}
+                  <label class="quiz__option">
+                    <input type="radio" name="quiz-q{{ forloop.parentloop.index0 }}" value="{{ block.settings[val_key] }}" data-quiz-input>
+                    <span class="quiz__option-label">{{ opt }}</span>
+                  </label>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div class="quiz__result" data-quiz-result hidden>
+        <p class="eyebrow">{{ section.settings.result_eyebrow }}</p>
+        <h3 class="quiz__result-title" data-quiz-result-title></h3>
+        <p class="quiz__result-text" data-quiz-result-text></p>
+        <div class="quiz__result-product" data-quiz-result-product></div>
+        {%- if section.settings.show_newsletter -%}
+          <form class="quiz__newsletter" data-quiz-newsletter action="/contact#contact_form" method="post" accept-charset="UTF-8">
+            <input type="hidden" name="form_type" value="customer">
+            <input type="hidden" name="utf8" value="✓">
+            <label class="quiz__newsletter-label" for="quiz-email">{{ section.settings.newsletter_label }}</label>
+            <div class="quiz__newsletter-row">
+              <input type="email" id="quiz-email" name="contact[email]" required placeholder="{{ section.settings.newsletter_placeholder }}" autocomplete="email">
+              <button type="submit" class="btn btn--primary">{{ section.settings.newsletter_button }}</button>
+            </div>
+          </form>
+        {%- endif -%}
+        <button type="button" class="quiz__restart" data-quiz-restart>{{ section.settings.restart_label }}</button>
+      </div>
+    </div>
+
+    <div class="quiz__nav">
+      <button type="button" class="btn btn--secondary" data-quiz-back hidden>{{ section.settings.back_label }}</button>
+      <button type="button" class="btn btn--primary" data-quiz-next disabled>{{ section.settings.next_label }}</button>
+    </div>
+    <p class="quiz__progress" data-quiz-progress aria-live="polite"></p>
+  </div>
+
+  <script type="application/json" data-quiz-config>
+    {
+      "products": {
+        "paw": {
+          "handle": {{ section.settings.product_paw.handle | json }},
+          "title": {{ section.settings.product_paw.title | json }},
+          "url": {{ section.settings.product_paw.url | json }},
+          "image": {{ section.settings.product_paw.featured_media | image_url: width: 600 | json }},
+          "price": {{ section.settings.product_paw.price | money | json }}
+        },
+        "coat": {
+          "handle": {{ section.settings.product_coat.handle | json }},
+          "title": {{ section.settings.product_coat.title | json }},
+          "url": {{ section.settings.product_coat.url | json }},
+          "image": {{ section.settings.product_coat.featured_media | image_url: width: 600 | json }},
+          "price": {{ section.settings.product_coat.price | money | json }}
+        },
+        "bundle": {
+          "handle": {{ section.settings.product_bundle.handle | json }},
+          "title": {{ section.settings.product_bundle.title | json }},
+          "url": {{ section.settings.product_bundle.url | json }},
+          "image": {{ section.settings.product_bundle.featured_media | image_url: width: 600 | json }},
+          "price": {{ section.settings.product_bundle.price | money | json }}
+        }
+      },
+      "results": {
+        "paw": {
+          "title": {{ section.settings.result_paw_title | json }},
+          "text": {{ section.settings.result_paw_text | json }}
+        },
+        "coat": {
+          "title": {{ section.settings.result_coat_title | json }},
+          "text": {{ section.settings.result_coat_text | json }}
+        },
+        "bundle": {
+          "title": {{ section.settings.result_bundle_title | json }},
+          "text": {{ section.settings.result_bundle_text | json }}
+        }
+      }
+    }
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Ritual finder quiz",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Find your ritual" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What's your dog's ritual?" },
+    { "type": "richtext", "id": "text", "label": "Intro text", "default": "<p>Three questions. One recommendation. Built around how you and your dog actually live.</p>" },
+    { "type": "product", "id": "product_paw", "label": "Product: paw focus" },
+    { "type": "product", "id": "product_coat", "label": "Product: coat focus" },
+    { "type": "product", "id": "product_bundle", "label": "Product: full ritual" },
+    { "type": "text", "id": "result_eyebrow", "label": "Result eyebrow", "default": "Your ritual" },
+    { "type": "text", "id": "result_paw_title", "label": "Paw result title", "default": "The paw-first ritual" },
+    { "type": "textarea", "id": "result_paw_text", "label": "Paw result text", "default": "Paws and noses take the day's wear. A daily balm keeps them supple through every season." },
+    { "type": "text", "id": "result_coat_title", "label": "Coat result title", "default": "The finishing ritual" },
+    { "type": "textarea", "id": "result_coat_text", "label": "Coat result text", "default": "A polished coat is a finished ritual. A lightweight mist, fragrance-free, for the final step." },
+    { "type": "text", "id": "result_bundle_title", "label": "Bundle result title", "default": "The complete ritual" },
+    { "type": "textarea", "id": "result_bundle_text", "label": "Bundle result text", "default": "Balm first, then mist — the order is part of the ritual. Both essentials, one considered set." },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show email capture on result", "default": true },
+    { "type": "text", "id": "newsletter_label", "label": "Email label", "default": "Get ritual notes in your inbox" },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Email placeholder", "default": "Email address" },
+    { "type": "text", "id": "newsletter_button", "label": "Email button", "default": "Join" },
+    { "type": "text", "id": "next_label", "label": "Next button", "default": "Continue" },
+    { "type": "text", "id": "back_label", "label": "Back button", "default": "Back" },
+    { "type": "text", "id": "restart_label", "label": "Restart link", "default": "Retake the quiz" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "text", "id": "option_1", "label": "Option 1 label" },
+        { "type": "select", "id": "value_1", "label": "Option 1 value", "options": [
+          { "value": "paw", "label": "Paw focus" },
+          { "value": "coat", "label": "Coat focus" },
+          { "value": "bundle", "label": "Full ritual" },
+          { "value": "neutral", "label": "Neutral (no scoring)" }
+        ], "default": "neutral" },
+        { "type": "text", "id": "option_2", "label": "Option 2 label" },
+        { "type": "select", "id": "value_2", "label": "Option 2 value", "options": [
+          { "value": "paw", "label": "Paw focus" },
+          { "value": "coat", "label": "Coat focus" },
+          { "value": "bundle", "label": "Full ritual" },
+          { "value": "neutral", "label": "Neutral (no scoring)" }
+        ], "default": "neutral" },
+        { "type": "text", "id": "option_3", "label": "Option 3 label" },
+        { "type": "select", "id": "value_3", "label": "Option 3 value", "options": [
+          { "value": "paw", "label": "Paw focus" },
+          { "value": "coat", "label": "Coat focus" },
+          { "value": "bundle", "label": "Full ritual" },
+          { "value": "neutral", "label": "Neutral (no scoring)" }
+        ], "default": "neutral" },
+        { "type": "text", "id": "option_4", "label": "Option 4 label" },
+        { "type": "select", "id": "value_4", "label": "Option 4 value", "options": [
+          { "value": "paw", "label": "Paw focus" },
+          { "value": "coat", "label": "Coat focus" },
+          { "value": "bundle", "label": "Full ritual" },
+          { "value": "neutral", "label": "Neutral (no scoring)" }
+        ], "default": "neutral" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ritual finder quiz",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "What does your dog's day ask of them?",
+            "option_1": "Long walks, rough ground",
+            "value_1": "paw",
+            "option_2": "They're a coat to be admired",
+            "value_2": "coat",
+            "option_3": "A bit of everything",
+            "value_3": "bundle"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Where do you want to focus your routine?",
+            "option_1": "Paws and nose",
+            "value_1": "paw",
+            "option_2": "Coat and finish",
+            "value_2": "coat",
+            "option_3": "The whole ritual",
+            "value_3": "bundle"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How often do you reach for care products?",
+            "option_1": "Daily — it's habit",
+            "value_1": "bundle",
+            "option_2": "A few times a week",
+            "value_2": "neutral",
+            "option_3": "When I remember",
+            "value_3": "neutral"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

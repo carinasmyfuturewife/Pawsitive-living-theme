@@ -656,3 +656,76 @@ body.cart-open { overflow: hidden; }
   .sticky-bar__price { font-size: 0.9rem; color: var(--color-ink-soft); margin: 0; }
   .sticky-bar__btn { flex-shrink: 0; }
 }
+
+/* ============================================================
+   Ritual finder quiz
+   ============================================================ */
+.quiz { padding: var(--space-xl) 1.5rem; background: var(--color-cream); }
+.quiz__inner { max-width: 640px; margin: 0 auto; text-align: center; }
+.quiz__heading { margin: 0.5rem 0 1rem; }
+.quiz__text { color: var(--color-ink-soft); margin-bottom: 2rem; }
+.quiz__step { border: 0; padding: 0; margin: 0; }
+.quiz__question { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.25rem; padding: 0; }
+.quiz__options { display: grid; gap: 0.75rem; }
+.quiz__option { display: block; cursor: pointer; }
+.quiz__option input { position: absolute; opacity: 0; pointer-events: none; }
+.quiz__option-label {
+  display: block; padding: 1rem 1.25rem; border: 1px solid var(--color-line);
+  background: var(--color-ivory); transition: border-color 0.2s, background 0.2s;
+}
+.quiz__option input:checked + .quiz__option-label {
+  border-color: var(--color-ink); background: var(--color-ivory);
+  box-shadow: inset 0 0 0 1px var(--color-ink);
+}
+.quiz__option input:focus-visible + .quiz__option-label { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+.quiz__nav { display: flex; justify-content: center; gap: 1rem; margin-top: 1.75rem; }
+.quiz__progress { font-size: 0.85rem; color: var(--color-ink-soft); margin-top: 1rem; }
+.quiz__result-title { font-family: var(--font-display); font-size: 1.6rem; margin: 0.5rem 0; }
+.quiz__result-text { color: var(--color-ink-soft); max-width: 480px; margin: 0 auto 1.5rem; }
+.quiz__product-card {
+  display: flex; align-items: center; gap: 1.25rem; text-decoration: none; color: inherit;
+  border: 1px solid var(--color-line); background: var(--color-ivory);
+  padding: 1rem; margin: 0 auto 1.5rem; max-width: 420px; text-align: left;
+}
+.quiz__product-card img { width: 96px; height: 96px; object-fit: cover; flex-shrink: 0; }
+.quiz__product-info { display: flex; flex-direction: column; gap: 0.25rem; }
+.quiz__newsletter { margin: 0 auto 1rem; max-width: 420px; }
+.quiz__newsletter-label { display: block; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.quiz__newsletter-row { display: flex; gap: 0.5rem; }
+.quiz__newsletter-row input { flex: 1; padding: 0.75rem; border: 1px solid var(--color-line); background: var(--color-ivory); font: inherit; }
+.quiz__restart { background: none; border: 0; text-decoration: underline; cursor: pointer; color: var(--color-ink-soft); font: inherit; padding: 0.5rem; }
+
+/* ============================================================
+   Reviews
+   ============================================================ */
+.reviews { padding: var(--space-xl) 1.5rem; }
+.reviews__inner { max-width: 1100px; margin: 0 auto; }
+.reviews__heading { margin: 0.5rem 0 1rem; }
+.reviews__text { color: var(--color-ink-soft); margin-bottom: 2.5rem; }
+.reviews__grid { display: grid; gap: 1.5rem; }
+@media (min-width: 750px) { .reviews__grid { grid-template-columns: repeat(3, 1fr); } }
+.review-card {
+  margin: 0; padding: 1.75rem; border: 1px solid var(--color-line);
+  background: var(--color-ivory); display: flex; flex-direction: column; gap: 0.75rem;
+}
+.review-card__stars { color: var(--color-sage); letter-spacing: 0.15em; }
+.star { opacity: 0.3; }
+.star--filled { opacity: 1; }
+.review-card__title { font-family: var(--font-display); font-size: 1.1rem; margin: 0; }
+.review-card__text { margin: 0; color: var(--color-ink-soft); font-size: 0.95rem; flex: 1; }
+.review-card__author { font-size: 0.85rem; font-weight: 600; }
+.review-card__detail { display: block; font-weight: 400; color: var(--color-ink-soft); }
+
+/* ============================================================
+   Hero video
+   ============================================================ */
+.hero__video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ============================================================
+   Product image zoom
+   ============================================================ */
+.product-card__media { overflow: hidden; }
+.product-card__media img { transition: transform 0.5s ease; }
+.product-card:hover .product-card__media img { transform: scale(1.06); }
+.product__featured { overflow: hidden; cursor: zoom-in; }
+.product__featured.zoomable img { transition: transform 0.3s ease; will-change: transform; }
