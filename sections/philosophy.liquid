@@ -1,0 +1,50 @@
+<section class="section philosophy" aria-label="{{ section.settings.heading }}">
+  <div class="page-width">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <p class="philosophy__statement">{{ section.settings.statement }}</p>
+    {%- if section.settings.link_label != blank -%}
+      <a class="link-arrow" href="{{ section.settings.link }}">{{ section.settings.link_label }} {% render 'icons', icon: 'arrow' %}</a>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="values-grid">
+        {%- for block in section.blocks -%}
+          <div class="value" {{ block.shopify_attributes }}>
+            <h3 class="value__title">{{ block.settings.title }}</h3>
+            <p class="value__text">{{ block.settings.text }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Philosophy",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our philosophy" },
+    { "type": "textarea", "id": "statement", "label": "Statement", "default": "Exceptional care is not an occasional gesture. It is an everyday ritual — small, deliberate acts of attention, repeated with love." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Read our story" },
+    { "type": "url", "id": "link", "label": "Link", "default": "/pages/our-story" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Thoughtful formulation" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Every ingredient earns its place. Nothing fashionable, nothing filler." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Philosophy",
+      "blocks": [{ "type": "value" }, { "type": "value" }, { "type": "value" }]
+    }
+  ]
+}
+{% endschema %}

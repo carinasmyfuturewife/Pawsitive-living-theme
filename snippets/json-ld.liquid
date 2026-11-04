@@ -1,0 +1,35 @@
+{% comment %} Structured data: Organization always; Product on product templates. All values from live objects. {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }}
+  {%- if settings.social_instagram != blank -%}
+  ,"sameAs": [{{ settings.social_instagram | json }}]
+  {%- endif -%}
+}
+</script>
+{%- if template.name == 'product' and product -%}
+  {%- assign v = product.selected_or_first_available_variant -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | truncate: 300 | json }},
+    "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+    {%- if product.featured_media -%}
+    "image": {{ product.featured_media | image_url: width: 1200 | prepend: 'https:' | json }},
+    {%- endif -%}
+    "sku": {{ v.sku | default: v.id | json }},
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ v.price | divided_by: 100.0 | json }},
+      "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}",
+      "url": {{ shop.url | append: product.url | json }}
+    }
+  }
+  </script>
+{%- endif -%}

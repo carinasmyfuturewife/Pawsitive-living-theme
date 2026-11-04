@@ -1,0 +1,21 @@
+{% comment %}
+  Positioning statement — brand positioning, placed directly after the hero.
+  Design doc §4 (homepage order). All copy editable in the theme editor.
+{% endcomment %}
+<section class="section positioning" aria-label="{{ section.settings.heading }}">
+  <div class="page-width page-width--narrow">
+    <h2 class="positioning__heading">{{ section.settings.heading }}</h2>
+    <p class="positioning__text">{{ section.settings.text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Positioning statement",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Care is not an occasion. It is a practice." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "PAWSITIVE.LIVING turns paw, nose, and coat care into a quiet daily ritual — thoughtfully formulated, fragrance-free where it matters, and designed to sit as naturally in your home as the finest skincare." }
+  ],
+  "presets": [{ "name": "Positioning statement" }]
+}
+{% endschema %}

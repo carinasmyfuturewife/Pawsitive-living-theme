@@ -1,0 +1,54 @@
+{% comment %}
+  Cart drawer — rendered once in layout. Content is populated by theme.js
+  from the native Shopify cart AJAX API (/cart.js, /cart/add.js, /cart/change.js).
+{% endcomment %}
+<div class="cart-drawer__overlay" id="CartDrawerOverlay" aria-hidden="true"></div>
+<aside class="cart-drawer" id="CartDrawer" role="dialog" aria-modal="true"
+  aria-label="{{ 'sections.cart.title' | t }}" aria-hidden="true"
+  data-free-ship="{{ section.settings.free_shipping_threshold | times: 100 }}"
+  data-shop-url="{{ routes.collections_url }}">
+  <div class="cart-drawer__head">
+    <p class="cart-drawer__title">{{ 'sections.cart.title' | t }} (<span data-cart-count>0</span>)</p>
+    <button class="icon-btn cart-drawer__close" type="button" data-cart-close aria-label="{{ 'general.accessibility.close' | t }}">
+      {% render 'icons', icon: 'close' %}
+    </button>
+  </div>
+
+  <div class="cart-drawer__items" id="CartDrawerItems" aria-live="polite"></div>
+
+  <div class="ship-progress" id="ShipProgress" hidden>
+    <p class="ship-progress__label" id="ShipProgressLabel"></p>
+    <div class="ship-progress__bar" role="progressbar" aria-label="{{ 'sections.cart.shipping_progress' | t }}">
+      <div class="ship-progress__fill" id="ShipProgressFill"></div>
+    </div>
+  </div>
+
+  <div class="cart-drawer__foot" id="CartDrawerFoot">
+    <p class="cart-drawer__subtotal">
+      <span>{{ 'sections.cart.subtotal' | t }}</span>
+      <strong id="CartSubtotal">{{ cart.total_price | money }}</strong>
+    </p>
+    <p class="cart-drawer__note">{{ 'sections.cart.taxes_note' | t }}</p>
+    <div class="cart-drawer__actions">
+      <a class="btn btn--primary btn--full" href="{{ routes.cart_url }}">{{ 'sections.cart.view_cart' | t }}</a>
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <button type="submit" name="checkout" class="btn btn--secondary btn--full">{{ 'sections.cart.checkout' | t }}</button>
+      </form>
+    </div>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free-shipping threshold (in store currency)",
+      "info": "Progress bar in the drawer. Set to 0 to hide.",
+      "default": 50
+    }
+  ]
+}
+{% endschema %}

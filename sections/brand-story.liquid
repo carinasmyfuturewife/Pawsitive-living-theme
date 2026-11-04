@@ -1,0 +1,42 @@
+<section class="section{% if section.settings.alt_background %} section--alt{% endif %}" aria-label="{{ section.settings.heading }}">
+  <div class="page-width">
+    <div class="story__grid">
+      <div class="story__media">
+        {%- if section.settings.image -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag:
+            loading: 'lazy', widths: '600, 900, 1200',
+            alt: section.settings.image.alt | default: section.settings.heading | escape
+          }}
+        {%- else -%}
+          <span class="story__media--placeholder" aria-hidden="true">{{ 'sections.brand_story.image_soon' | t }}</span>
+        {%- endif -%}
+      </div>
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 style="margin-bottom:1rem">{{ section.settings.heading }}</h2>
+        <div class="rte">{{ section.settings.text }}</div>
+        {%- if section.settings.link_label != blank -%}
+          <p style="margin-top:1.5rem"><a class="link-arrow" href="{{ section.settings.link }}">{{ section.settings.link_label }} {% render 'icons', icon: 'arrow' %}</a></p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why we exist" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Care is a daily practice." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>PAWSITIVE.LIVING began with a simple observation: the dogs we love most are cared for in small moments, every single day. We make a considered few essentials for those moments — formulated thoughtfully, designed quietly, and made to earn their place in your routine.</p>" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Our story" },
+    { "type": "url", "id": "link", "label": "Link", "default": "/pages/our-story" },
+    { "type": "checkbox", "id": "alt_background", "label": "Alternate background", "default": true }
+  ],
+  "presets": [{ "name": "Brand story" }]
+}
+{% endschema %}

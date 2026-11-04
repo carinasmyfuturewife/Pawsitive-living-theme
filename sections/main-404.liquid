@@ -1,0 +1,12 @@
+<section class="page not-found" aria-label="{{ 'general.404.title' | t }}">
+  <div class="page-width">
+    <p class="not-found__title">404</p>
+    <h1>{{ 'general.404.title' | t }}</h1>
+    <p class="section__sub" style="margin:1rem 0 2rem">{{ 'general.404.text' | t }}</p>
+    <a class="btn btn--primary" href="{{ routes.root_url }}">{{ 'general.404.home' | t }}</a>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

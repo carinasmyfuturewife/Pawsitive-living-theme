@@ -1,0 +1,39 @@
+<section class="section" aria-label="{{ section.settings.heading }}">
+  <div class="page-width">
+    <div class="section__head text-center">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="section__sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- assign coll = section.settings.collection -%}
+    {%- if coll and coll.products.size > 0 -%}
+      <div class="product-grid">
+        {%- for product in coll.products limit: section.settings.limit -%}
+          {% render 'product-card', product_card_product: product, show_quick_add: section.settings.quick_add %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="text-center" style="color: var(--color-ink-soft)">{{ 'sections.featured_collection.empty' | t }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everyday rituals, considered." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "A small, deliberate line. Nothing more than your dog needs, nothing less than they deserve." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "quick_add", "label": "Enable quick add", "default": true }
+  ],
+  "presets": [{ "name": "Featured collection" }]
+}
+{% endschema %}

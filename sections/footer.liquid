@@ -1,0 +1,70 @@
+<footer class="site-footer">
+  <div class="page-width">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="{{ routes.root_url }}" class="wordmark" aria-label="{{ shop.name }}">
+          pawsitive<span class="sage-dot">.</span>living
+        </a>
+        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <h3 class="footer__heading">{{ block.settings.heading }}</h3>
+          {%- if block.type == 'links' -%}
+            <ul class="footer__links">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- elsif block.type == 'impact' -%}
+            <p class="footer__impact">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.rights' | t }}</span>
+      <span>
+        {%- if section.settings.show_powered_by -%}
+          {{ powered_by_link }}
+        {%- endif -%}
+      </span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Everyday care, elevated." },
+    { "type": "checkbox", "id": "show_powered_by", "label": "Show powered-by link", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "impact",
+      "name": "Impact note",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Our promise" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "$2 from every order goes to animal welfare." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [{ "type": "links" }, { "type": "links" }, { "type": "impact" }]
+    }
+  ]
+}
+{% endschema %}

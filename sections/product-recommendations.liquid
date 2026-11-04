@@ -1,0 +1,45 @@
+{%- comment -%}
+  Related products: same-collection siblings of the current product.
+  Deterministic, no external API dependency.
+{%- endcomment -%}
+{%- assign shown_ids = ',' -%}
+{%- assign shown_count = 0 -%}
+
+{%- capture related_cards -%}
+  {%- for coll in product.collections -%}
+    {%- for p in coll.products -%}
+      {%- assign pid = p.id | append: ',' -%}
+      {%- unless p.id == product.id or shown_ids contains pid -%}
+        {%- if shown_count < section.settings.limit -%}
+          {% render 'product-card', product_card_product: p %}
+          {%- assign shown_ids = shown_ids | append: pid -%}
+          {%- assign shown_count = shown_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if shown_count > 0 -%}
+<section class="section section--tight" aria-label="{{ section.settings.heading }}">
+  <div class="page-width">
+    <div class="section__head">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="product-grid">
+      {{ related_cards }}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the ritual" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 8, "step": 1, "default": 3 }
+  ],
+  "presets": [{ "name": "Related products" }]
+}
+{% endschema %}

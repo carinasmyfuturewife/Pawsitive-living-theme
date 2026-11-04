@@ -1,0 +1,48 @@
+<section class="section section--alt newsletter" aria-label="{{ section.settings.heading }}">
+  <div class="page-width">
+    <div class="section__head text-center" style="margin-bottom:0">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section__sub">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="newsletter__form">
+      {%- form 'customer', id: 'NewsletterForm', class: 'newsletter-form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form-status form-status--success" role="status">{{ 'sections.newsletter.success' | t }}</p>
+        {%- else -%}
+          {%- if form.errors -%}
+            <p class="form-status form-status--error" role="alert">{{ form.errors.messages.email }}</p>
+          {%- endif -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="newsletter__row">
+            <div class="field">
+              <label class="visually-hidden" for="NewsletterEmail">{{ 'sections.newsletter.email_label' | t }}</label>
+              <input class="field__input" type="email" id="NewsletterEmail" name="contact[email]"
+                placeholder="{{ 'sections.newsletter.placeholder' | t }}" required autocomplete="email"
+                value="{{ form.email }}" aria-required="true">
+            </div>
+            <button type="submit" class="btn btn--primary">{{ 'sections.newsletter.submit' | t }}</button>
+          </div>
+          <p class="newsletter__note">{{ 'sections.newsletter.note' | t }}</p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Ritual Letter" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Notes on considered care." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Occasional letters on rituals, formulations, and the dogs that inspire them. No noise." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

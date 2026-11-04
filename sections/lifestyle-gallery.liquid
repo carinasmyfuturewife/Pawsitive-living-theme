@@ -1,0 +1,47 @@
+{% comment %}
+  Lifestyle gallery — editorial imagery slots for commissioned photography.
+  Design doc art direction: natural light, neutral environments, real dogs.
+  Empty image pickers render nothing (no placeholder imagery is faked).
+{% endcomment %}
+<section class="section gallery" aria-label="{{ section.settings.heading }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="gallery-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image != blank -%}
+          <figure class="gallery__item" {{ block.shopify_attributes }}>
+            {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.alt }}
+            {%- if block.settings.caption != blank -%}
+              <figcaption>{{ block.settings.caption }}</figcaption>
+            {%- endif -%}
+          </figure>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lifestyle gallery",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The ritual, at home." }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "alt", "label": "Alt text", "default": "" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Lifestyle gallery", "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }] }
+  ]
+}
+{% endschema %}

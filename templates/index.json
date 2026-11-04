@@ -1,0 +1,144 @@
+{
+  "order": [
+    "hero",
+    "positioning_statement",
+    "featured_collection",
+    "feature_balm",
+    "feature_coat",
+    "feature_bundle",
+    "philosophy",
+    "ingredient_standards",
+    "lifestyle_gallery",
+    "brand_story",
+    "give_back",
+    "newsletter"
+  ],
+  "sections": {
+    "brand_story": {
+      "settings": {
+        "alt_background": true,
+        "eyebrow": "Why we exist",
+        "heading": "Care is a daily practice.",
+        "link": "/pages/our-story",
+        "link_label": "Our story",
+        "text": "<p>PAWSITIVE.LIVING began with a simple observation: the dogs we love most are cared for in small moments, every single day. We make a considered few essentials for those moments \u2014 formulated thoughtfully, designed quietly, and made to earn their place in your routine.</p>"
+      },
+      "type": "brand-story"
+    },
+    "feature_balm": {
+      "settings": {
+        "eyebrow": "The ritual",
+        "heading": "For paws and noses",
+        "text": "<p>A considered balm for the parts of your dog that meet the world. Fragrance-free, made for daily use, through every season.</p>"
+      },
+      "type": "product-feature"
+    },
+    "feature_bundle": {
+      "settings": {
+        "eyebrow": "The set",
+        "heading": "The complete ritual",
+        "text": "<p>Both essentials in one considered set. Balm first, then mist \u2014 the order is part of the ritual.</p>"
+      },
+      "type": "product-feature"
+    },
+    "feature_coat": {
+      "settings": {
+        "alt_background": true,
+        "eyebrow": "The ritual",
+        "heading": "For the coat",
+        "reverse": true,
+        "text": "<p>A lightweight, fragrance-free finishing mist for a naturally polished coat. The refined final step.</p>"
+      },
+      "type": "product-feature"
+    },
+    "featured_collection": {
+      "settings": {
+        "eyebrow": "The collection",
+        "heading": "Everyday rituals, considered.",
+        "limit": 3,
+        "quick_add": true,
+        "subheading": "A small, deliberate line. Nothing more than your dog needs, nothing less than they deserve."
+      },
+      "type": "featured-collection"
+    },
+    "give_back": {
+      "settings": {
+        "eyebrow": "Our impact",
+        "heading": "From every order, to animal welfare.",
+        "link": "/pages/our-impact",
+        "link_label": "Our impact",
+        "text": "$2 from every order goes to animal welfare. Measurable, verifiable, and part of every purchase \u2014 not an afterthought."
+      },
+      "type": "give-back"
+    },
+    "hero": {
+      "settings": {
+        "cta_primary_label": "Explore the collection",
+        "cta_primary_link": "/collections/all",
+        "cta_secondary_label": "Our philosophy",
+        "cta_secondary_link": "/pages/our-story",
+        "eyebrow": "Ultra-premium pet care",
+        "heading": "EVERYDAY CARE, ELEVATED.",
+        "text": "Thoughtfully developed essentials for the rituals that matter most."
+      },
+      "type": "hero"
+    },
+    "newsletter": {
+      "settings": {
+        "eyebrow": "The Ritual Letter",
+        "heading": "Notes on considered care.",
+        "text": "Occasional letters on rituals, formulations, and the dogs that inspire them. No noise."
+      },
+      "type": "newsletter"
+    },
+    "philosophy": {
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "blocks": {
+        "v1": {
+          "settings": {
+            "text": "Every ingredient earns its place. Nothing fashionable, nothing filler.",
+            "title": "Thoughtful formulation"
+          },
+          "type": "value"
+        },
+        "v2": {
+          "settings": {
+            "text": "No fragrance, essential oils, or masking agents. Ever.",
+            "title": "Fragrance-free, always"
+          },
+          "type": "value"
+        },
+        "v3": {
+          "settings": {
+            "text": "Nothing is listed or promised until it is tested and true.",
+            "title": "Verified before claimed"
+          },
+          "type": "value"
+        }
+      },
+      "settings": {
+        "eyebrow": "Our philosophy",
+        "link": "/pages/our-story",
+        "link_label": "Read our story",
+        "statement": "Exceptional care is not an occasional gesture. It is an everyday ritual \u2014 small, deliberate acts of attention, repeated with love."
+      },
+      "type": "philosophy"
+    },
+    "positioning_statement": {
+      "type": "positioning-statement",
+      "settings": {}
+    },
+    "ingredient_standards": {
+      "type": "ingredient-standards",
+      "settings": {}
+    },
+    "lifestyle_gallery": {
+      "type": "lifestyle-gallery",
+      "settings": {}
+    }
+  }
+}

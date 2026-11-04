@@ -1,0 +1,193 @@
+{% comment %}
+  Main product — all pricing, variants, and inventory render from the live
+  product object. Nothing is hardcoded.
+{% endcomment %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<section class="section" data-product-root>
+  <div class="page-width">
+    <nav aria-label="Breadcrumb" style="margin-bottom:1.5rem;font-size:0.8125rem;color:var(--color-ink-soft)">
+      <a href="{{ routes.root_url }}" style="text-decoration:none">{{ 'general.breadcrumbs.home' | t }}</a>
+      &nbsp;/&nbsp;
+      <a href="{{ routes.collections_url }}" style="text-decoration:none">{{ 'general.breadcrumbs.shop' | t }}</a>
+      &nbsp;/&nbsp; <span aria-current="page">{{ product.title }}</span>
+    </nav>
+
+    <div class="product">
+      <div class="product__gallery">
+        <div class="product__featured">
+          {%- if product.featured_media -%}
+            {{ product.featured_media | image_url: width: 1400 | image_tag:
+              widths: '700, 1000, 1400',
+              fetchpriority: 'high',
+              data-featured-image: '',
+              alt: product.featured_media.alt | default: product.title | escape
+            }}
+          {%- else -%}
+            <span class="product__featured--placeholder" aria-hidden="true">{{ 'products.product.image_soon' | t }}</span>
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs" data-thumbs role="list">
+            {%- for media in product.media -%}
+              <button type="button" class="product__thumb" data-thumb
+                data-full="{{ media | image_url: width: 1400 }}"
+                aria-current="{{ forloop.first }}" aria-label="{{ 'products.product.view_image' | t: number: forloop.index }}">
+                {{ media | image_url: width: 160 | image_tag: loading: 'lazy', alt: media.alt | default: product.title | escape }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="product__info">
+        <p class="product__vendor">{{ product.vendor }}</p>
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        <p class="product__price" data-product-price aria-live="polite">
+          {% render 'price', price_product: product %}
+        </p>
+
+        {%- comment -%}
+          Bundle savings: computed from compare-at price (merchant-editable
+          on the product record). No hardcoded amounts.
+        {%- endcomment -%}
+        {%- if product.compare_at_price_max > product.price -%}
+          {%- assign savings = product.compare_at_price_max | minus: product.price -%}
+          <p class="bundle-save">{{ 'products.product.save_html' | t: amount: savings | money }}</p>
+        {%- endif -%}
+
+        {%- if product.description != blank -%}
+          <div class="product__desc rte">{{ product.description }}</div>
+        {%- endif -%}
+
+        {% form 'product', product, data-product-form: '', id: 'ProductForm' %}
+          <p class="form-status form-status--error" role="alert" hidden></p>
+
+          {%- unless product.has_only_default_variant -%}
+            <div class="variant-picker">
+              {%- for option in product.options_with_values -%}
+                <span class="variant-picker__label" id="Option-{{ forloop.index }}">{{ option.name }}</span>
+                <div class="variant-options" role="radiogroup" aria-labelledby="Option-{{ forloop.index }}">
+                  {%- for value in option.values -%}
+                    <label class="variant-option">
+                      <input type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}"
+                        data-option-input data-option-index="{{ forloop.parentloop.index0 }}"
+                        {% if option.selected_value == value %}checked{% endif %}>
+                      <span>{{ value }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+          <div class="buy-row">
+            <span class="qty">
+              <button type="button" data-qty-minus aria-label="{{ 'products.product.decrease' | t }}">−</button>
+              <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}">
+              <button type="button" data-qty-plus aria-label="{{ 'products.product.increase' | t }}">+</button>
+            </span>
+            <button type="submit" class="btn btn--primary" data-add-to-cart
+              data-add-text="{{ 'products.product.add_to_cart' | t }}"
+              data-adding-text="{{ 'products.product.adding' | t }}"
+              {% unless current_variant.available %}disabled{% endunless %}>
+              {%- if current_variant.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+          </div>
+        {% endform %}
+
+        <p class="inventory-note" data-inventory-note hidden
+          data-instock="{{ 'products.product.in_stock' | t }}"
+          data-low="{{ 'products.product.low_stock' | t }}"
+          data-soldout="{{ 'products.product.sold_out' | t }}"></p>
+
+        <div class="giveback-line">
+          {% render 'icons', icon: 'leaf' %}
+          <span>{{ 'products.product.giveback' | t }}</span>
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="accordion" data-accordion>
+            {%- for block in section.blocks -%}
+              <div class="accordion__item" {{ block.shopify_attributes }}>
+                <h3 style="margin:0">
+                  <button type="button" class="accordion__btn" aria-expanded="false" aria-controls="acc-{{ section.id }}-{{ forloop.index }}">
+                    {{ block.settings.title }}
+                    <span class="accordion__icon" aria-hidden="true"></span>
+                  </button>
+                </h3>
+                <div class="accordion__panel" id="acc-{{ section.id }}-{{ forloop.index }}" role="region">
+                  {%- if block.type == 'ingredients' -%}
+                    {%- assign inci = product.metafields.custom.inci_ingredients -%}
+                    {%- if inci != blank -%}
+                      <div class="accordion__panel-inner rte">{{ inci }}</div>
+                    {%- else -%}
+                      <div class="accordion__panel-inner rte"><p>Our final ingredient lists will be published here once formulations are validated. Nothing will be listed until it is verified.</p></div>
+                    {%- endif -%}
+                  {%- else -%}
+                    <div class="accordion__panel-inner rte">{{ block.settings.text }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-product-json>{{ product.variants | json }}</script>
+
+  <div class="sticky-bar" data-sticky-bar>
+    <div class="sticky-bar__info">
+      <p class="sticky-bar__title">{{ product.title }}</p>
+      <p class="sticky-bar__price" data-sticky-price>{{ current_variant.price | money }}</p>
+    </div>
+    <button type="button" class="btn btn--primary sticky-bar__btn" data-sticky-add
+      {% unless current_variant.available %}disabled{% endunless %}>
+      {{ 'products.product.add_to_cart' | t }}
+    </button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "details",
+      "name": "Details accordion",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Application" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Use as part of your daily ritual. A little goes a long way.</p>" }
+      ]
+    },
+    {
+      "type": "ingredients",
+      "name": "Ingredients (validated metafield)",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Ingredients" },
+        { "type": "paragraph", "content": "Renders product.metafields.custom.inci_ingredients when set. Until then it shows an honest placeholder — nothing is listed until it is verified." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product information",
+      "blocks": [
+        { "type": "details", "settings": { "title": "Benefits", "text": "<p>Formulated for everyday use. Fragrance-free. Made to feel considered, never fussy.</p>" } },
+        { "type": "details", "settings": { "title": "Application", "text": "<p>Use as part of your daily ritual. A little goes a long way.</p>" } },
+        { "type": "ingredients", "settings": { "title": "Ingredients" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

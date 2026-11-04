@@ -1,0 +1,46 @@
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <button class="icon-btn mobile-menu-btn" id="MobileMenuBtn" aria-expanded="false" aria-controls="MobileNav" aria-label="{{ 'general.accessibility.menu' | t }}">
+      {% render 'icons', icon: 'menu' %}
+    </button>
+
+    <nav class="site-header__nav" aria-label="{{ 'general.accessibility.primary_nav' | t }}">
+      <ul class="nav__list">
+        {%- for link in section.settings.menu.links -%}
+          <li><a class="nav__link" href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <a href="{{ routes.root_url }}" class="wordmark" aria-label="{{ shop.name }}">
+      pawsitive<span class="sage-dot">.</span>living
+    </a>
+
+    <div class="site-header__icons">
+      <a class="icon-btn" href="{{ routes.search_url }}" aria-label="{{ 'general.accessibility.search' | t }}">
+        {% render 'icons', icon: 'search' %}
+      </a>
+      <button class="icon-btn" type="button" data-open-cart aria-label="{{ 'general.accessibility.cart' | t }}">
+        {% render 'icons', icon: 'cart' %}
+        <span class="cart-count" data-cart-count hidden>0</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="MobileNav" aria-label="{{ 'general.accessibility.primary_nav' | t }}">
+    <ul class="mobile-nav__list">
+      {%- for link in section.settings.menu.links -%}
+        <li><a class="mobile-nav__link" href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,47 @@
+<section class="hero" aria-label="{{ section.settings.heading }}">
+  <div class="hero__media">
+    {%- if section.settings.image -%}
+      {{ section.settings.image | image_url: width: 2000 | image_tag:
+        widths: '900, 1400, 2000',
+        fetchpriority: 'high',
+        alt: section.settings.image.alt | default: section.settings.heading | escape
+      }}
+    {%- else -%}
+      <div class="hero__media--placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+  <div class="hero__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow" style="color: var(--color-sage)">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h1 class="hero__title">{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}
+      <p class="hero__text">{{ section.settings.text }}</p>
+    {%- endif -%}
+    <div class="hero__ctas">
+      {%- if section.settings.cta_primary_label != blank -%}
+        <a class="btn btn--light" href="{{ section.settings.cta_primary_link }}">{{ section.settings.cta_primary_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_label != blank -%}
+        <a class="btn btn--outline-light" href="{{ section.settings.cta_secondary_link }}">{{ section.settings.cta_secondary_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image", "info": "Editorial, cinematic. Soft natural light." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ultra-premium pet care" },
+    { "type": "text", "id": "heading", "label": "Headline", "default": "EVERYDAY CARE, ELEVATED." },
+    { "type": "textarea", "id": "text", "label": "Supporting text", "default": "Thoughtfully developed essentials for the rituals that matter most." },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary button label", "default": "Explore the collection" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary button link", "default": "/collections/all" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary button label", "default": "Our philosophy" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary button link", "default": "/pages/our-story" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}
