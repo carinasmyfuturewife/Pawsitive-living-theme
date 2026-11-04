@@ -144,6 +144,13 @@
   </div>
 
   <script type="application/json" data-product-json>{{ product.variants | json }}</script>
+  <script type="application/json" data-variant-images>
+    {
+      {%- for v in product.variants -%}
+        "{{ v.id }}": {% if v.featured_image %}{{ v.featured_image | image_url: width: 1400 | json }}{% else %}null{% endif %}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    }
+  </script>
 
   <div class="sticky-bar" data-sticky-bar>
     <div class="sticky-bar__info">

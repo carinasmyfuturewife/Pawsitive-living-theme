@@ -65,9 +65,11 @@
       "settings": {
         "eyebrow": "Our impact",
         "heading": "From every order, to animal welfare.",
+        "statement": "$2 from every order goes to animal welfare. Measurable, verifiable, and part of every purchase \u2014 not an afterthought.",
+        "donation_amount": "$2",
+        "show_amount": true,
         "link": "/pages/our-impact",
-        "link_label": "Our impact",
-        "text": "$2 from every order goes to animal welfare. Measurable, verifiable, and part of every purchase \u2014 not an afterthought."
+        "link_label": "Our impact"
       },
       "type": "give-back"
     },

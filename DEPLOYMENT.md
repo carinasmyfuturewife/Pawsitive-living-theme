@@ -1,55 +1,87 @@
 # PAWSITIVE.LIVING — Theme Deployment Guide
 
-This directory contains the complete, custom Shopify Online Store 2.0 theme for PAWSITIVE.LIVING, built from the approved Brand Identity Bible (Concept B, Modern Minimalism). It was built as implementation files — **nothing has been uploaded, previewed, or published to the store.**
+Custom Shopify Online Store 2.0 theme for PAWSITIVE.LIVING, built from the
+approved Brand Identity Bible (Concept B, Modern Minimalism).
 
-## What is included
+## Store
+- Store: "My Store 3" — **pawsitiveliving-store.myshopify.com**
+  (previously jbshvc-ma.myshopify.com; same store, handle renamed Nov 2026)
+- Plan: trial (upgrade to paid before launch; checkout will not process on trial)
+- Products: PAW RITUAL ($24), COAT FINISH ($26), THE RITUAL BUNDLE ($44) — all ACTIVE
+- Pages: Our Story, Our Standards, Our Impact, FAQ, Contact — all created and published
+- Current live theme: "pawsitive-living-theme" (published Nov 2026)
+- GitHub: carinasmyfuturewife/Pawsitive-living-theme (source of truth, branch main)
 
-- `layout/`, `templates/`, `sections/`, `snippets/`, `assets/`, `config/`, `locales/` — the full theme
+## Current package
+- `layout/`, `templates/`, `sections/`, `snippets/`, `assets/`, `config/`, `locales/` — full theme source
 - `pawsitive-living-theme.zip` — the same theme, zipped for upload
 - `TESTING.md` — static validation report + manual test checklist
-
-## Prerequisites
-
-- Shopify Admin access to the store (jbshvc-ma.myshopify.com)
-- The store is currently on a **trial plan** — upgrade to a paid plan before launch; checkout will not process on trial
-- The 3 product records already exist (PAW RITUAL, COAT FINISH, THE RITUAL BUNDLE). Publish them from DRAFT when ready
+- `../theme-corrections/AUDIT.md` — technical audit for the corrections pass
+- `../theme-corrections/QA-REPORT.md` — QA report for the corrections pass
 
 ## Deploy via Admin (recommended)
-
-1. Download `pawsitive-living-theme.zip` from `~/workspace/pawsitive-living/shopify-theme/`
+1. Use `pawsitive-living-theme.zip` from this folder (rebuilt after corrections)
 2. Shopify Admin → **Online Store → Themes**
-3. Click **Add theme → Upload zip file**, select the zip
-4. The theme appears under **Theme library** (unpublished). Click **Customize** to preview and edit — never edit the live theme directly
-5. In the theme editor, assign content:
-   - Homepage sections: pick the **Shop All** collection for Featured collection, and pick the three products for the three Product feature sections
-   - Header/Footer: select the `main-menu` and `footer` menus (create them under Content → Menus if they do not exist)
-   - Create pages: **Our Story**, **Our Standards**, **Our Impact**, **FAQ** (template suffix `page.faq`), **Contact** (template suffix `page.contact`), **Shipping & Returns**, **Privacy Policy**, **Terms of Service**
-6. **Bundle savings badge:** on THE RITUAL BUNDLE product record, set the **Compare-at price** to $50.00. The theme computes "Save $X" from compare-at vs price — no code changes needed if prices change later
-7. **Free-shipping progress:** Theme editor → Cart drawer section → set the free-shipping threshold (default 50). This only mirrors the shipping setting — configure the actual free-shipping rate in Settings → Shipping and delivery
-8. Upload product photography to Files/Products; assign in the theme editor or product records
-9. **Publish only with explicit approval.** Admin → Themes → Publish on the new theme
+3. **Add theme → Upload zip file**, select the zip
+4. The theme appears under **Theme library** (unpublished). Click **Customize**
+   to preview — never edit the live theme directly
+5. In the theme editor, verify content assignments:
+   - Featured collection → **Shop All** collection
+   - Header/Footer → `main-menu` and `footer` menus
+   - Give-back section → confirm donation amount, statement, partner (leave
+     partner blank until verified; toggle "Show donation amount figure" off
+     until the amount is verified)
+6. **Bundle savings badge:** on THE RITUAL BUNDLE product record, set the
+   **Compare-at price** to $50.00. The theme computes "Save $X" from
+   compare-at vs price.
+7. **Free-shipping progress:** Theme editor → Cart drawer section → set the
+   free-shipping threshold (default 50). This only mirrors the shipping
+   setting — configure the actual free-shipping rate in Settings → Shipping.
+8. Upload product photography to Files/Products; assign in the editor.
+9. **Publish only with explicit approval.** Admin → Themes → Publish.
+
+## Deploy via GitHub integration (alternative)
+The repo is connected to the store. Pushing to `main` syncs to the
+"Pawsitive-living-theme/main" draft theme. Review the draft, then publish
+from Admin. Note: the GitHub sync applies the same schema validation as ZIP
+upload (see lesson below).
 
 ## Deploy via Shopify CLI (alternative)
-
 ```bash
-shopify theme init --path pawsitive-living  # not needed; use the existing folder
 cd ~/workspace/pawsitive-living/shopify-theme
-shopify theme push --unpublished --theme "PAWSITIVE.LIVING v1"
+shopify theme push --unpublished
 ```
+Requires the Shopify CLI authenticated against the store.
 
-Requires the Shopify CLI authenticated against the store (`shopify auth login`).
+## Critical lesson: Shopify validates schemas on import (Nov 2026)
+Shopify **silently drops** theme files that fail schema validation during ZIP
+upload and GitHub sync — no error is shown. This caused a full homepage
+outage: 6 sections were dropped, which then caused `templates/index.json`
+and `templates/product.json` to be rejected ("Section type does not refer to
+an existing section file").
 
-## What could NOT be done from the build environment
+Rules discovered (validate before packaging):
+- `url` settings: do not use `/pages/...` paths as `default` values.
+  (`/collections/all` is accepted; page paths are rejected.)
+- `text`/`textarea` settings: do not use `"default": ""` (blank defaults
+  are rejected — omit the key instead).
+- Block `name`: maximum 25 characters.
+- JSON templates are validated against the sections actually present: a
+  template referencing a missing section file is rejected.
 
-- No live store or theme access: no upload, no preview, no publish, no app installation
-- Checkout settings, payment providers, taxes, shipping zones/rates, and domains must be configured in Admin
-- Navigation menus and page content must be created in Admin (templates are ready for them)
-- Product photography does not exist yet — image areas show tasteful "coming soon" placeholders
-- The contact email default is `hello@pawsitive.living` — update it in the Contact form section before launch
-- Give-back partner is TBD — the Impact page must name the partner and use verified figures only once confirmed
+Always run the validation script (see TESTING.md) before zipping.
+
+## Still required in Admin (not part of the theme)
+- Upgrade trial → paid plan
+- Checkout settings, payment providers, taxes, shipping zones/rates, domains
+- Navigation menu content (menus exist as containers; verify links)
+- Product photography (placeholders are honest "coming soon" blocks)
+- Contact email: update from `hello@pawsitive.living` if needed
+- Give-back partner: TBD — name the partner and use verified figures only
+  once confirmed; keep "Show donation amount figure" off until verified
+- Analytics (GA4, Search Console), sitemap submission
 
 ## After publishing
-
 - Run through the manual checklist in `TESTING.md`
-- Verify checkout end-to-end with a test order (Bogus Gateway or Shopify Payments test mode)
-- Submit the sitemap to Search Console; verify meta titles/descriptions
+- Verify checkout end-to-end with a test order (Bogus Gateway or test mode)
+- Verify the homepage, product pages, cart drawer, and give-back section

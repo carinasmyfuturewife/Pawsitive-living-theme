@@ -1,25 +1,47 @@
-<section class="section section--dark giveback" aria-label="{{ section.settings.heading }}">
+{% comment %}
+  Give-back — all donation details are merchant-configurable.
+  Amount, partner, and statement come from section settings; nothing about
+  the donation is hardcoded. When the partner is unconfirmed, neutral copy
+  is shown instead of naming anyone.
+{% endcomment %}
+{%- if section.settings.enabled -%}
+<section class="section section--dark giveback" aria-label="{{ section.settings.heading | escape }}">
   <div class="page-width">
     {%- if section.settings.eyebrow != blank -%}
       <p class="eyebrow">{{ section.settings.eyebrow }}</p>
     {%- endif -%}
-    <p class="giveback__figure" aria-label="$2 from every order">$2<span class="sage-dot">.</span></p>
+    {%- if section.settings.show_amount and section.settings.donation_amount != blank -%}
+      <p class="giveback__figure" aria-label="{{ section.settings.donation_amount | escape }} from every order">{{ section.settings.donation_amount }}<span class="sage-dot">.</span></p>
+    {%- endif -%}
     <h2 style="margin-bottom:1rem">{{ section.settings.heading }}</h2>
-    <p class="giveback__text">{{ section.settings.text }}</p>
-    {%- if section.settings.link_label != blank -%}
+    {%- if section.settings.statement != blank -%}
+      <p class="giveback__text">{{ section.settings.statement }}</p>
+    {%- endif -%}
+    {%- if section.settings.link_label != blank and section.settings.link != blank -%}
       <p><a class="btn btn--outline-light" href="{{ section.settings.link }}">{{ section.settings.link_label }}</a></p>
     {%- endif -%}
-    <p class="giveback__note" style="margin-top:1.5rem">{{ 'sections.give_back.partner_note' | t }}</p>
+    <p class="giveback__note" style="margin-top:1.5rem">
+      {%- if section.settings.partner != blank -%}
+        {{ 'sections.give_back.partner_named' | t: partner: section.settings.partner }}
+      {%- else -%}
+        {{ 'sections.give_back.partner_note' | t }}
+      {%- endif -%}
+    </p>
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Give-back",
   "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Show this section", "default": true },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our impact" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "From every order, to animal welfare." },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "$2 from every order goes to animal welfare. Measurable, verifiable, and part of every purchase — not an afterthought." },
+    { "type": "textarea", "id": "statement", "label": "Statement", "default": "A fixed amount from every order goes to animal welfare. Measurable, verifiable, and part of every purchase — not an afterthought." },
+    { "type": "text", "id": "donation_amount", "label": "Donation amount (e.g. $2)", "info": "Shown as the large figure. Leave blank to hide the figure." },
+    { "type": "checkbox", "id": "show_amount", "label": "Show donation amount figure", "info": "Turn off until the amount is verified.", "default": true },
+    { "type": "text", "id": "partner", "label": "Partner organization", "info": "Leave blank until a partner is confirmed and verified. A neutral note is shown instead." },
     { "type": "text", "id": "link_label", "label": "Link label", "default": "Our impact" },
     { "type": "url", "id": "link", "label": "Link" }
   ],

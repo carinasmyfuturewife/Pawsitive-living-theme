@@ -1,1 +1,115 @@
-{"collections":{"general":{"count":"{ count } products","empty":"This collection is empty for now. Check back soon.","eyebrow":"Shop","sort":"Sort by"}},"general":{"404":{"home":"Back to home","text":"The page you are looking for has moved or no longer exists.","title":"Page not found"},"accessibility":{"cart":"Open cart","close":"Close","menu":"Open menu","next":"Next page","pagination":"Pagination","previous":"Previous page","primary_nav":"Primary navigation","search":"Search","skip_to_content":"Skip to content"},"breadcrumbs":{"home":"Home","shop":"Shop"},"pagination":{"page":"Page { number }"},"search":{"no_results":"No results found. Try a different search.","placeholder":"Search products","results":"{ count } results for “{ terms }”","submit":"Search","title":"Search"}},"products":{"product":{"add_to_cart":"Add to cart","adding":"Adding…","decrease":"Decrease quantity","giveback":"$2 from every order goes to animal welfare.","image_soon":"Product photography coming soon","in_stock":"In stock","increase":"Increase quantity","low_stock":"Only a few left","quantity":"Quantity","quick_add":"Quick add","save":"Save","save_html":"Save { amount }","sold_out":"Sold out","view_image":"View image { number }","view_product":"View product"}},"sections":{"announcement":{"label":"Announcement"},"brand_story":{"image_soon":"Photography coming soon"},"cart":{"checkout":"Checkout","continue":"Continue shopping","empty":"Your cart is empty.","product":"Product","quantity":"Quantity","quantity_for":"Quantity for { title }","remove":"Remove","shipping_progress":"Free shipping progress","subtotal":"Subtotal","taxes_note":"Shipping and taxes calculated at checkout.","title":"Your cart","total":"Total","update":"Update cart","view_cart":"View cart"},"contact":{"email":"Email","email_title":"Email us","error":"Please review the highlighted fields and try again.","message":"Message","name":"Name","submit":"Send message","success":"Thank you. Your message has been sent."},"featured_collection":{"empty":"Add a collection in the theme editor to feature products here."},"footer":{"rights":"All rights reserved."},"give_back":{"partner_note":"Our giving partner will be announced soon."},"newsletter":{"email_label":"Email address","note":"One email a month, at most. Unsubscribe anytime.","placeholder":"Your email address","submit":"Subscribe","success":"Welcome. Please check your inbox to confirm."},"product_feature":{"image_soon":"Product photography coming soon","select":"Select a product in the theme editor to feature it here."}}}
+{
+  "collections": {
+    "general": {
+      "count": "{ count } products",
+      "empty": "This collection is empty for now. Check back soon.",
+      "eyebrow": "Shop",
+      "sort": "Sort by"
+    }
+  },
+  "general": {
+    "404": {
+      "home": "Back to home",
+      "text": "The page you are looking for has moved or no longer exists.",
+      "title": "Page not found"
+    },
+    "accessibility": {
+      "cart": "Open cart",
+      "close": "Close",
+      "menu": "Open menu",
+      "next": "Next page",
+      "pagination": "Pagination",
+      "previous": "Previous page",
+      "primary_nav": "Primary navigation",
+      "search": "Search",
+      "skip_to_content": "Skip to content"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "shop": "Shop"
+    },
+    "pagination": {
+      "page": "Page { number }"
+    },
+    "search": {
+      "no_results": "No results found. Try a different search.",
+      "placeholder": "Search products",
+      "results": "{ count } results for “{ terms }”",
+      "submit": "Search",
+      "title": "Search"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "adding": "Adding…",
+      "decrease": "Decrease quantity",
+      "giveback": "$2 from every order goes to animal welfare.",
+      "image_soon": "Product photography coming soon",
+      "in_stock": "In stock",
+      "increase": "Increase quantity",
+      "low_stock": "Only a few left",
+      "quantity": "Quantity",
+      "quick_add": "Quick add",
+      "save": "Save",
+      "save_html": "Save { amount }",
+      "sold_out": "Sold out",
+      "view_image": "View image { number }",
+      "view_product": "View product"
+    }
+  },
+  "sections": {
+    "announcement": {
+      "label": "Announcement"
+    },
+    "brand_story": {
+      "image_soon": "Photography coming soon"
+    },
+    "cart": {
+      "checkout": "Checkout",
+      "continue": "Continue shopping",
+      "empty": "Your cart is empty.",
+      "product": "Product",
+      "quantity": "Quantity",
+      "quantity_for": "Quantity for { title }",
+      "remove": "Remove",
+      "shipping_progress": "Free shipping progress",
+      "subtotal": "Subtotal",
+      "taxes_note": "Shipping and taxes calculated at checkout.",
+      "title": "Your cart",
+      "total": "Total",
+      "update": "Update cart",
+      "view_cart": "View cart"
+    },
+    "contact": {
+      "email": "Email",
+      "email_title": "Email us",
+      "error": "Please review the highlighted fields and try again.",
+      "message": "Message",
+      "name": "Name",
+      "submit": "Send message",
+      "success": "Thank you. Your message has been sent."
+    },
+    "featured_collection": {
+      "empty": "Add a collection in the theme editor to feature products here."
+    },
+    "footer": {
+      "rights": "All rights reserved."
+    },
+    "give_back": {
+      "partner_note": "Our giving partner will be announced soon.",
+      "partner_named": "In partnership with {{ partner }}."
+    },
+    "newsletter": {
+      "email_label": "Email address",
+      "note": "One email a month, at most. Unsubscribe anytime.",
+      "placeholder": "Your email address",
+      "submit": "Subscribe",
+      "success": "Welcome. Please check your inbox to confirm."
+    },
+    "product_feature": {
+      "image_soon": "Product photography coming soon",
+      "select": "Select a product in the theme editor to feature it here."
+    }
+  }
+}
